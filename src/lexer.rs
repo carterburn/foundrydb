@@ -201,7 +201,6 @@ impl<'a> Lexer<'a> {
             },
             _ => {
                 // anything else, we have hit an error at this spot 
-                //return Err(std::io::Error::new(std::io::ErrorKind::InvalidInput, format!("Invalid character at position {}: {}", self.current, c)));
                 return Err(LexerError { input: self.input, position: self.current, character: c });
             }
         })
