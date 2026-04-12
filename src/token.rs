@@ -1,7 +1,10 @@
+#[derive(Debug)]
 pub enum TokenKind {
     // Keywords
     Create,
+    Table,
     Insert,
+    Into,
     Select,
     Values,
     From,
@@ -27,13 +30,14 @@ pub enum TokenKind {
     Eof,
 }
 
+#[derive(Debug)]
 pub struct Token<'a> {
     /// The type of Token this is
-    kind: TokenKind,
+    pub kind: TokenKind,
 
     /// The actual text this Token refers to (lexeme in compiler terms)
-    lexeme: &'a str,
+    pub lexeme: &'a str,
 
     /// The position in the broader input this Token starts at
-    position: usize,
+    pub position: usize,
 }

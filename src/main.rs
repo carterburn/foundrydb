@@ -1,5 +1,7 @@
 use std::io::{self, stdin, BufRead, Write};
 
+use foundrydb::lexer::Lexer;
+
 fn main() -> Result<(), io::Error> {
     let mut stdin = stdin().lock();
     let mut buffer = String::new();
@@ -16,7 +18,11 @@ fn main() -> Result<(), io::Error> {
                 return Ok(());
             }
             Ok(_n) => {
-                process_command(buffer.trim());
+                if buffer.trim().starts_with(".") {
+                    process_dot_command(buffer.trim());
+                } else {
+                    process_command(buffer.trim());
+                }
             }
             Err(e) => {
                 eprintln!("Error while reading input: {e:?}");
@@ -26,7 +32,7 @@ fn main() -> Result<(), io::Error> {
     }
 }
 
-fn process_command(cmd: &str) {
+fn process_dot_command(cmd: &str) {
     let cmd = cmd.to_lowercase();
     match cmd.as_str() {
         ".exit" => {
@@ -38,4 +44,18 @@ fn process_command(cmd: &str) {
             println!("Unrecognized command: {cmd}");
         }
     }
+}
+
+fn process_command(input: &str) {
+    let mut lexer = Lexer::new(input);
+
+    let tokens = match lexer.lex() {
+        Ok(t) => t,
+        Err(e) => {
+            println!("{e}");
+            return;
+        }
+    };
+
+    println!("Tokens processed: {tokens:?}");
 }
