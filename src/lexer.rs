@@ -70,11 +70,13 @@ impl<'a> Lexer<'a> {
     }
 
     /// A more comprehensive "alphabetic" check 
+    #[inline(always)]
     fn is_alphabetic_with_underscore(c: char) -> bool {
         c.is_alphabetic() || c == '_'
     }
 
     /// A comprehensive "alphanumeric" check 
+    #[inline(always)]
     fn is_alphanumeric_with_underscore(c: char) -> bool {
         c.is_alphanumeric() || c == '_'
     }
