@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum TokenKind {
     // Keywords
     Create,
@@ -30,7 +30,7 @@ pub enum TokenKind {
     Eof,
 }
 
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct Token<'a> {
     /// The type of Token this is
     pub kind: TokenKind,

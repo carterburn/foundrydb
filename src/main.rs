@@ -1,6 +1,6 @@
 use std::io::{self, stdin, BufRead, Write};
 
-use foundrydb::lexer::Lexer;
+use foundrydb::{lexer::Lexer, parser::Parser};
 
 fn main() -> Result<(), io::Error> {
     let mut stdin = stdin().lock();
@@ -58,4 +58,18 @@ fn process_command(input: &str) {
     };
 
     println!("Tokens processed: {tokens:?}");
+    let parser = Parser::new(tokens);
+    match parser.parse() {
+        Ok(statements) => {
+            // we don't support multiple statements with semicolons or files (yet), so we'll just
+            // print out the first statement
+            println!(
+                "Parsed into AST; recreated SQL from the AST: {}",
+                statements[0]
+            );
+        }
+        Err(e) => {
+            println!("{e}");
+        }
+    }
 }
